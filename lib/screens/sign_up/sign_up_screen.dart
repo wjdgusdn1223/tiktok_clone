@@ -35,8 +35,10 @@ class SignUpScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.grey.shade100,
+        elevation: 1,
         padding: const EdgeInsets.symmetric(
-          vertical: Sizes.size20,
+          vertical: Sizes.size24,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,6 +51,7 @@ class SignUpScreen extends StatelessWidget {
               'Log in',
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
