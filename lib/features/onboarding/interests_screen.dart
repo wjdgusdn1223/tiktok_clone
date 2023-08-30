@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/onboarding/widgets/interest_button.dart';
 
 const interests = [
   "Daily Life",
@@ -43,79 +44,134 @@ const interests = [
   "Home & Garden",
 ];
 
-class InterestsScreen extends StatelessWidget {
+class InterestsScreen extends StatefulWidget {
   const InterestsScreen({super.key});
+
+  @override
+  State<InterestsScreen> createState() => _InterestsScreenState();
+}
+
+class _InterestsScreenState extends State<InterestsScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  bool _showTitle = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      _onScroll();
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.offset > 75) {
+      if (!_showTitle) {
+        setState(() {
+          _showTitle = true;
+        });
+      }
+    } else {
+      if (_showTitle) {
+        setState(() {
+          _showTitle = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Choose your interests"),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: Sizes.size24,
-            right: Sizes.size24,
-            bottom: Sizes.size16,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(Sizes.size64),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(
+                color: _showTitle
+                    ? Colors.grey.shade300
+                    : Colors.grey.withOpacity(0),
+              ),
+            ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Gaps.v12,
-              const Text(
+          padding: const EdgeInsets.only(
+            top: Sizes.size24,
+            bottom: Sizes.size10,
+          ),
+          child: AnimatedOpacity(
+            opacity: _showTitle ? 1 : 0,
+            duration: const Duration(milliseconds: 200),
+            child: const SafeArea(
+              child: Text(
                 "Choose your interests",
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: Sizes.size40,
-                  fontWeight: FontWeight.w700,
-                  height: 1.1,
+                  fontSize: Sizes.size16,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
-              Gaps.v12,
-              Text(
-                "Get better video recommendations",
-                style: TextStyle(
-                  fontSize: Sizes.size20,
-                  color: Colors.grey.shade600,
-                ),
+            ),
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(
+          right: Sizes.size24,
+        ),
+        child: Scrollbar(
+          controller: _scrollController,
+          radius: const Radius.circular(5),
+          thickness: Sizes.size6,
+          child: SingleChildScrollView(
+            clipBehavior: Clip.none,
+            controller: _scrollController,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: Sizes.size24,
+                right: Sizes.size24,
+                bottom: Sizes.size16,
               ),
-              Gaps.v32,
-              Wrap(
-                runSpacing: Sizes.size20,
-                spacing: Sizes.size12,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  for (var interest in interests)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Sizes.size12,
-                        horizontal: Sizes.size20,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          Sizes.size32,
-                        ),
-                        border: Border.all(
-                          color: Colors.grey.shade300,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 4,
-                            spreadRadius: 4,
-                          ),
-                        ],
-                        color: Colors.white,
-                      ),
-                      child: Text(
-                        interest,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    )
+                  Gaps.v12,
+                  const Text(
+                    "Choose your interests",
+                    style: TextStyle(
+                      fontSize: Sizes.size40,
+                      fontWeight: FontWeight.w700,
+                      height: 1.1,
+                    ),
+                  ),
+                  Gaps.v12,
+                  Text(
+                    "Get better video recommendations",
+                    style: TextStyle(
+                      fontSize: Sizes.size20,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  Gaps.v32,
+                  Wrap(
+                    runSpacing: Sizes.size16,
+                    spacing: Sizes.size10,
+                    children: [
+                      for (var interest in interests)
+                        InterestButton(interest: interest)
+                    ],
+                  )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
         ),
       ),
