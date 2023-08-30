@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 class LoginFormScreen extends StatefulWidget {
   const LoginFormScreen({super.key});
@@ -19,9 +20,14 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const InterestsScreen(),
+          ),
+        );
       }
     }
-    // TODO: create login check and route push
   }
 
   void _onScaffoldTap() {
@@ -63,8 +69,15 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                     ),
                   ),
                   validator: (value) {
-                    // TODO: create validating feature
-                    return;
+                    final regExp = RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
+                    if (value != null && value.isEmpty) {
+                      return "Please write your email";
+                    } else if (value != null && !regExp.hasMatch(value)) {
+                      return "Invalid email";
+                    }
+                    return null;
                   },
                   onSaved: (newValue) {
                     if (newValue != null) {
@@ -77,6 +90,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   keyboardType: TextInputType.visiblePassword,
                   autocorrect: false,
                   cursorColor: Theme.of(context).primaryColor,
+                  obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Password',
                     enabledBorder: UnderlineInputBorder(
@@ -92,7 +106,10 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   ),
                   validator: (value) {
                     // TODO: create validating feature
-                    return;
+                    if (value != null && value.isEmpty) {
+                      return "Please write your password";
+                    }
+                    return null;
                   },
                   onSaved: (newValue) {
                     if (newValue != null) {
