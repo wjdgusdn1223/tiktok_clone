@@ -20,13 +20,9 @@ class _TutorialScreenState extends State<TutorialScreen> {
 
   void _onPanUpdate(DragUpdateDetails details) {
     if (details.delta.dx > 0) {
-      setState(() {
-        _direction = Direction.right;
-      });
+      _direction = Direction.right;
     } else {
-      setState(() {
-        _direction = Direction.left;
-      });
+      _direction = Direction.left;
     }
   }
 
