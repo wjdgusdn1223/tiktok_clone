@@ -85,26 +85,25 @@ class _TutorialScreenState extends State<TutorialScreen> {
               secondChild: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    children: [
-                      Gaps.v72,
-                      const Text(
-                        "Follow the rules!",
-                        style: TextStyle(
-                          fontSize: Sizes.size40,
-                          fontWeight: FontWeight.w700,
-                        ),
+                  Gaps.v72,
+                  const FractionallySizedBox(
+                    widthFactor: 1,
+                    child: Text(
+                      "Follow the rules!",
+                      style: TextStyle(
+                        fontSize: Sizes.size40,
+                        fontWeight: FontWeight.w700,
                       ),
-                      Gaps.v10,
-                      Text(
-                        "Take care of one another! Please.",
-                        style: TextStyle(
-                          fontSize: Sizes.size20,
-                          height: 1.3,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                    ],
+                    ),
+                  ),
+                  Gaps.v10,
+                  Text(
+                    "Take care of one another! Please.",
+                    style: TextStyle(
+                      fontSize: Sizes.size20,
+                      height: 1.3,
+                      color: Colors.grey.shade700,
+                    ),
                   ),
                 ],
               ),
