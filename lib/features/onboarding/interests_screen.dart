@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
 import 'package:tiktok_clone/features/onboarding/widgets/interest_button.dart';
 
 const interests = [
@@ -84,6 +85,14 @@ class _InterestsScreenState extends State<InterestsScreen> {
         });
       }
     }
+  }
+
+  void _onTapNext() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const TutorialScreen(),
+      ),
+    );
   }
 
   @override
@@ -220,24 +229,27 @@ class _InterestsScreenState extends State<InterestsScreen> {
               ),
               Gaps.h12,
               Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Sizes.size10,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Colors.grey.shade300,
+                child: GestureDetector(
+                  onTap: _onTapNext,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Sizes.size10,
                     ),
-                    color: Colors.white,
-                  ),
-                  child: const Text(
-                    "Next",
-                    style: TextStyle(
-                      fontSize: Sizes.size14,
-                      fontWeight: FontWeight.w600,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: Colors.grey.shade300,
+                      ),
+                      color: Colors.white,
                     ),
-                    textAlign: TextAlign.center,
+                    child: const Text(
+                      "Next",
+                      style: TextStyle(
+                        fontSize: Sizes.size14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),
