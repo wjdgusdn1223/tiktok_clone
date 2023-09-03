@@ -39,40 +39,24 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _onTap,
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
-        items: const [
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house),
+      bottomNavigationBar: NavigationBar(
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onTap,
+        destinations: [
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.house,
+              color: Theme.of(context).primaryColor,
+            ),
             label: 'home',
-            tooltip: 'what are you?',
-            backgroundColor: Colors.amber,
           ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.searchengin),
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.searchengin,
+              color: Theme.of(context).primaryColor,
+            ),
             label: 'search',
-            tooltip: 'what are you?',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.house),
-              label: 'home',
-              tooltip: 'what are you?',
-              backgroundColor: Colors.pink),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.searchengin),
-            label: 'search',
-            tooltip: 'what are you?',
-            backgroundColor: Colors.yellow,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house),
-            label: 'home',
-            tooltip: 'what are you?',
-            backgroundColor: Colors.teal,
           ),
         ],
       ),
