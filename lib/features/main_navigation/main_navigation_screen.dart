@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -37,29 +39,25 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _screens[_selectedIndex],
-      bottomNavigationBar: NavigationBar(
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: _onTap,
-        destinations: [
-          NavigationDestination(
-            icon: FaIcon(
-              FontAwesomeIcons.house,
-              color: Theme.of(context).primaryColor,
-            ),
-            label: 'home',
-          ),
-          NavigationDestination(
-            icon: FaIcon(
-              FontAwesomeIcons.searchengin,
-              color: Theme.of(context).primaryColor,
-            ),
-            label: 'search',
-          ),
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        activeColor: Theme.of(context).primaryColor,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(
+                CupertinoIcons.house,
+                size: Sizes.size20,
+              ),
+              label: 'home'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                CupertinoIcons.search,
+                size: Sizes.size20,
+              ),
+              label: 'search'),
         ],
       ),
+      tabBuilder: (context, index) => _screens[index],
     );
   }
 }
